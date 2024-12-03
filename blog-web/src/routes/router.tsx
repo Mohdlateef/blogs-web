@@ -7,7 +7,7 @@ import { SingUp } from "../views/Auth/SignUp";
 import SignIn from "../views/Auth/SignIn";
 import { MyBlogs } from "../views/SideBar/MyBlogs/MyBlogs";
 import GetProfile from "../views/SideBar/Profile/GetProfile";
- 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element:<GetProfile/>
+        element: <GetProfile />
       },
       {
         path: "/myBlogs",
@@ -28,13 +28,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // Authantication
-    path:'/signUp',
-    element:<SingUp/>
+    path: '/signUp',
+    element: <SingUp />
   },
   {
-    path:'/signIn',
-    element:<SignIn/>
+    path: '/signIn',
+    element: <SignIn />
   }
 ]);
 export default router;
