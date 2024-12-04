@@ -3,9 +3,8 @@ import axios from "axios";
 const baseURL = "http://localhost:8000";
 
 const readBlogs = async (page: any) => {
-  // console.log(page);
   try {
-    const res = await axios.get(`${baseURL}/blog/readblogs?SKIP=${page}`, {
+    const res = await axios.get(`${baseURL}/blog/read-blogs?SKIP=${page}`, {
       withCredentials: true,
     });
     console.log(res.data);
@@ -22,11 +21,10 @@ const createBlog = async (blogTitle: any, blogInput: any, userId: any) => {
     return;
   }
   axios.defaults.withCredentails = true;
-  // console.log("from createBlog",userId)
 
   try {
     const res = await axios.post(
-      `${baseURL}/blog/createblog`,
+      `${baseURL}/blog/create-blog`,
       {
         title: blogTitle,
         textbody: blogInput,
