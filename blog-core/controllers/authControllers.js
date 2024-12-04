@@ -34,9 +34,15 @@ const loginpageController = (req, res) => {
 const loginControler = async (req, res) => {
   const { loginId, password } = req.body;
 
+
   try {
     //find user in Db
     const userDb = await findUserWithKey({ key: loginId });
+=======
+  try {
+    //find user in Db
+    const userDb = await findUserWithKey({ key: loginId });
+    
     //compare password
     const ismatch = await bcrypt.compare(password, userDb.password);
 

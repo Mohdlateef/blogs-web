@@ -11,6 +11,7 @@ const myblogs = async (userId: string, page: Number) => {
     { params }
   );
 
+
   if (res.data.status === 200) {
     return res.data.data;
   }

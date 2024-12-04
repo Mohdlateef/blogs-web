@@ -4,6 +4,7 @@ import axios from "axios";
 import { User } from "./types/authInterfaces";
 export const signUp = async ({ name, userName, email, password }: User) => {
   try {
+
     const res = await axios.post(`${baseURL}/auth/sign-up`, {
       name: name,
       username: userName,
@@ -27,7 +28,11 @@ export const signIn = async ({ loginId, password }: User) => {
 axios.defaults.withCredentails=true;
 
     const res = await axios.post(
+
       `${baseURL}/auth/sign-in`,
+
+      `${baseURL}/auth/logIn`,
+
       {
         loginId,
         password,
