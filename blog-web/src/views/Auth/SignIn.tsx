@@ -1,21 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { signIn } from "../../apiServices/auth/authApi";
-// import { NavLink } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-// import userContext from "../../globalvaribles/context/userIdContext";
-import userContext from "../../context/userIdContext";
-
-
-
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-
-
   const [loginId, setLoginId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
-  const user:any=useContext(userContext)
+
   const handleSubmit = () => {
     if (!loginId || !password) {
       alert("empty fields");
@@ -25,18 +17,14 @@ const SignIn = () => {
     mutate({ loginId, password });
   };
   const { mutate } = useMutation({
-    mutationFn: signIn, // Call the signUp function (which wraps the axios call)
-    onSuccess: (apiData:any) => {
-      // console.log(apiData.data._id);
-      console.log(apiData.data.userDb._id,30);
-
+    mutationFn: signIn,
+    onSuccess: (apiData: any) => {
       if (apiData.status === 200) {
         alert(apiData.message);
-         user.setUserId(apiData.data.userDb._id)
         navigate("/");
       } else alert(apiData.message);
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       console.error("Sign-up failed:", error);
     },
   });

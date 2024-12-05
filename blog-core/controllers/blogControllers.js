@@ -9,12 +9,14 @@ const {
 } = require("../models/blogModel");
 const { LIMIT } = require("../privateContants");
 
-const blogdatavalidation = require("../utils/blogutils");
+const blogDataValidation = require("../utils/blogutils");
 
 const createBlogControler = async (req, res) => {
-  const { title, textbody, userId } = req.body;
+  const { title, textbody } = req.body;
+  const userId = req.headers["_id"];
   try {
-    await blogdatavalidation(title, textbody);
+    //dataValidation
+    await blogDataValidation(title, textbody);
   } catch (error) {
     return res.send({
       status: 400,
@@ -66,7 +68,6 @@ const readBlogsController = async (req, res) => {
 
 const readMyBlogsController = async (req, res) => {
   const SKIP = parseInt(req.query.SKIP) || 0;
-
   const userId = new ObjectId(req.query.userId);
   try {
     const myblogs = await readMyBlogsModel({ SKIP, userId });
@@ -81,7 +82,6 @@ const readMyBlogsController = async (req, res) => {
       data: myblogs,
     });
   } catch (error) {
-    console.log(error);
     return res.send({
       staus: 500,
       message: "internal server error",
@@ -96,9 +96,8 @@ const editBlogsController = async (req, res) => {
 
   //dataValidation
   try {
-    await blogdatavalidation(newText);
+    await blogDataValidation(newText);
   } catch (error) {
-    console.log(error);
     return res.send({
       status: 400,
       error: error,
@@ -137,7 +136,6 @@ const deleteBlogController = async (req, res) => {
   const { blogId } = req.body;
   try {
     const blogdata = await getBlogWithId({ blogId });
-    console.log(blogdata);
 
     // checkblog
     if (!blogdata) {

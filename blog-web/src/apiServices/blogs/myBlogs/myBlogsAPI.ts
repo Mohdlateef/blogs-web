@@ -1,28 +1,13 @@
-import axios from "axios";
+import { API } from "../..";
 
-const baseURL = "http://localhost:8000";
-
-const myblogs = async (userId: string, page: Number) => {
-  const params: any = {
-    userId: userId,
-  };
-  const res = await axios.get(
-    `http://localhost:8000/blog/read-my-blogs?SKIP=${page}`,
-    { params }
-  );
-
-
-  if (res.data.status === 200) {
-    return res.data.data;
-  }
-  if (res.data.status === 204) {
-    return res.data.message;
-  }
+const myblogs = async (page: Number) => {
+  const res = await API.get(`/blog/read-my-blogs?SKIP=${page}`);
+return res.data.status===200? res.data.data:""
 };
 
 const deleteMyBlog = async (id: string) => {
   try {
-    const res = await axios.post(`${baseURL}/blog/delete-blog`, {
+    const res = await API.post(`/blog/delete-blog`, {
       blogId: id,
     });
     return res.data;
@@ -32,7 +17,7 @@ const deleteMyBlog = async (id: string) => {
 };
 
 const updateBlog = async (text: string, blogId: string) => {
-  const res = await axios.post(`${baseURL}/blog/edit-blog`, {
+  const res = await API.post(`/blog/edit-blog`, {
     newText: text,
     blogId,
   });

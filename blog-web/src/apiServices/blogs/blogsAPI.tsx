@@ -1,40 +1,31 @@
-import axios from "axios";
-
-const baseURL = "http://localhost:8000";
+import { API } from "..";
 
 const readBlogs = async (page: any) => {
   try {
-    const res = await axios.get(`${baseURL}/blog/read-blogs?SKIP=${page}`, {
-      withCredentials: true,
+    const res = await API.get(`/blog/read-blogs?SKIP=${page}`, {
+      headers:null,
+      params:null,
     });
-    return res.data.status === 200 ? res.data.data : [];
+    return res.data.status === 200 ? res.data.data : "";
   } catch (error) {
     console.log(error);
   }
 };
 
-const createBlog = async (blogTitle: any, blogInput: any, userId: any) => {
+const createBlog = async (blogTitle: any, blogInput: any,) => {
   if (!blogInput) {
     alert("please enter text");
     return;
   }
-  axios.defaults.withCredentails = true;
 
   try {
-    const res = await axios.post(
-      `${baseURL}/blog/create-blog`,
-      {
-        title: blogTitle,
-        textbody: blogInput,
-        userId: userId,
-      },
-      {
-        headers: {
-          auth: JSON.parse(localStorage.getItem("isLogin")).token,
-          email: "test5@gmail.com ",
-        },
-      }
-    );
+    const res = await API.post(`/blog/create-blog`,
+       {
+      title: blogTitle,
+      textbody: blogInput,
+  
+    });
+    console.log(res)
   } catch (error) {
     console.log(error);
   }

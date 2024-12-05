@@ -1,24 +1,11 @@
-import React, { useContext, useRef } from "react";
-// import { createBlog } from "../../apiServices/blogs/createBlog";
-// import userContext from "../../globalvaribles/context/userIdContext";
-import userContext from "../../context/userIdContext";
+import React from "react";
 
 import { BlogsQuery } from "../../apiServices";
 
 export default function CreateBlogs() {
   const [blogTitle, setBlogTitile] = React.useState<any>("");
-
   const [blogInput, setBlogInput] = React.useState<any>("");
-
-  let userdata: any = useContext(userContext);
-  //  console.log(userdata)
-  let _id: string = userdata.userId;
-
-  const createblog = BlogsQuery.useMutationCreateBlog(
-    blogTitle,
-    blogInput,
-    _id
-  );
+  const createblog = BlogsQuery.useMutationCreateBlog(blogTitle, blogInput);
 
   return (
     <div className="bg-gray-800 w-full rounded-lg">
@@ -43,8 +30,6 @@ export default function CreateBlogs() {
         <button
           onClick={() => {
             createblog.mutate();
-            // setBlogInput("");
-            // setBlogInput("");
           }}
           className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none"
         >
