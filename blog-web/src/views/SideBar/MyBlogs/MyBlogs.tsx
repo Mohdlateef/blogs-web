@@ -9,16 +9,14 @@ export const MyBlogs = () => {
   const deletemutation = MyBlogsQuery.useMutationDeleteMyBlog(pageNumber);
   const updateMutation = myBlogsQuery.useMutationUpdateMyBlog(
     newtext,
-    pageNumber
   );
 
-  // console.log(data,isPending);
   return (
     <div className="h-[90h] overflow-scroll w-[87vw]">
       {isPending ? (
         <h3>loading....</h3>
       ) : (
-        data?.map((ele: any) => (
+        data?(data.map((ele: any) => (
           <div
             key={ele._id}
             className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg  my-4 w-70vw"
@@ -75,7 +73,7 @@ export const MyBlogs = () => {
               </Button>
             </div>
           </div>
-        ))
+        ))):<h3>no more content</h3>
       )}
       <div className="flex items-center gap-1">
         <button

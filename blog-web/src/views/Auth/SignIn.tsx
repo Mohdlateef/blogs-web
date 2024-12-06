@@ -1,47 +1,46 @@
 import React, { useContext } from "react";
+
 import { signIn } from "../../apiServices/auth/authApi";
-// import { NavLink } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-// import userContext from "../../globalvaribles/context/userIdContext";
+import { NavLink, useNavigate } from "react-router-dom";
+import Notifications from "../../components/Notifications";
 import userContext from "../../context/userIdContext";
 
-
-
-
 const SignIn = () => {
-
-
+  const {setIsVisible,setMessage}:any=useContext(userContext)
   const [loginId, setLoginId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
-  const user:any=useContext(userContext)
+
   const handleSubmit = () => {
     if (!loginId || !password) {
-      alert("empty fields");
+    setMessage("empty fields")
+    setIsVisible(true)
       return;
     }
+ 
+
 
     mutate({ loginId, password });
   };
   const { mutate } = useMutation({
-    mutationFn: signIn, // Call the signUp function (which wraps the axios call)
-    onSuccess: (apiData:any) => {
-      // console.log(apiData.data._id);
-      console.log(apiData.data.userDb._id,30);
-
+    mutationFn: signIn,
+    onSuccess: (apiData: any) => {
       if (apiData.status === 200) {
+        setMessage(apiData.message)
+        setIsVisible(true)
         alert(apiData.message);
-         user.setUserId(apiData.data.userDb._id)
         navigate("/");
       } else alert(apiData.message);
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       console.error("Sign-up failed:", error);
     },
   });
 
   return (
+    <div>
+      <Notifications></Notifications>
     <div className="h-screen bg-blue-500 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
         <h2 className="text-3xl font-semibold text-center text-blue-700 mb-6">
@@ -78,6 +77,7 @@ const SignIn = () => {
           </NavLink>
         </div>
       </div>
+    </div>
     </div>
   );
 };

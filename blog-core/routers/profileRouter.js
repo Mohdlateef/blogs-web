@@ -5,7 +5,7 @@ const { getProfile } = require("../controllers/profileControllers");
 const profileRouter=express.Router();
 
 
-profileRouter.get("/getProfile",getProfile)
+profileRouter.get("/get-profile",getProfile)
 
 
 module.exports=profileRouter;

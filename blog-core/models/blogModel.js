@@ -18,13 +18,12 @@ const createBlogModel = ({ title, textbody, userId }) => {
   });
 };
 
-//readAllBLogs
 const readBlogsModel = ({ SKIP }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const blogs = await blogSchema.aggregate([
         {
-          $sort: { creationDateTime: -1 }, //-1 Assending,1 desending,
+          $sort: { creationDateTime: -1 },
         },
         {
           $skip: SKIP,
@@ -39,8 +38,6 @@ const readBlogsModel = ({ SKIP }) => {
   });
 };
 
-//read my blogs
-
 const readMyBlogsModel = ({ SKIP, userId }) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -50,7 +47,6 @@ const readMyBlogsModel = ({ SKIP, userId }) => {
         { $skip: SKIP },
         { $limit: LIMIT },
       ]);
-        // console.log(myblogs,53);
       resolve(myblogs);
     } catch (error) {
       reject(error);
@@ -69,13 +65,10 @@ const getBlogWithId = ({ blogId }) => {
   });
 };
 
-const editBlog = ({ newTitle, newText, blogId }) => {
+const editBlog = ({newText, blogId }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await blogSchema.findOneAndUpdate(
-        { _id: blogId },
-        {  textbody: newText }
-      );
+      await blogSchema.findOneAndUpdate({ _id: blogId }, { textbody: newText });
       resolve();
     } catch (error) {
       reject(error);
@@ -83,11 +76,10 @@ const editBlog = ({ newTitle, newText, blogId }) => {
   });
 };
 
-const deleteBlog = ({blogId}) => {
-    console.log(87,blogId);
+const deleteBlog = ({ blogId }) => {
   return new Promise(async (resolve, reject) => {
     try {
-    const deletedb=  await blogSchema.findOneAndDelete({ _id:blogId});
+      const deletedb = await blogSchema.findOneAndDelete({ _id: blogId });
       resolve(deletedb);
     } catch (error) {
       reject(error);
