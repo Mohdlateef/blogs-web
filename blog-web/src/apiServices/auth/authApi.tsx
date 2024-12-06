@@ -5,16 +5,19 @@ import { User } from "./types/authInterfaces";
 import { API } from "..";
 export const signUp = async ({ name, userName, email, password }: User) => {
   try {
-    const res = await axios.post(`${baseURL}/auth/sign-up`, {
-      name: name,
-      username: userName,
-      email: email,
-      password: password,
-    }
-  ,{
-    params:null,
-    headers:null
-  });
+    const res = await axios.post(
+      `${baseURL}/auth/sign-up`,
+      {
+        name: name,
+        username: userName,
+        email: email,
+        password: password,
+      },
+      {
+        params: null,
+        headers: null,
+      }
+    );
 
     return res.data;
   } catch (error) {
@@ -24,18 +27,21 @@ export const signUp = async ({ name, userName, email, password }: User) => {
 
 export const signIn = async ({ loginId, password }: User) => {
   try {
-    const res = await API.post(`/auth/sign-in`, {
-      loginId,
-      password,
-    },
-  {
-    params:{
-      userId:null
-    }
-  });
+    const res = await API.post(
+      `/auth/sign-in`,
+      {
+        loginId,
+        password,
+      },
+      {
+        params: {
+          userId: null,
+        },
+      }
+    );
 
     if (res.data.status === 200) {
-      //store token in local
+      
       localStorage.setItem(
         "isLogin",
         JSON.stringify({

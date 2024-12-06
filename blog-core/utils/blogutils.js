@@ -1,8 +1,6 @@
-const blogDataValidation = (textbody,title) => {
+const blogDataValidation = (textbody) => {
   return new Promise((resolve, reject) => {
     if (!textbody) reject("textbody is missing");
-    if (!title) reject("Missing title");
-
     resolve();
   });
 };

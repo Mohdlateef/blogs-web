@@ -28,8 +28,10 @@ export default function CreateBlogs() {
 
       <div className="flex justify-end p-3">
         <button
-          onClick={() => {
-            createblog.mutate();
+          onClick={async() => {
+            await createblog.mutate();
+            setBlogInput("")
+            setBlogTitile("")
           }}
           className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none"
         >

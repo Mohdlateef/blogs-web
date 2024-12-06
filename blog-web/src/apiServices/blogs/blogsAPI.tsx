@@ -3,8 +3,8 @@ import { API } from "..";
 const readBlogs = async (page: any) => {
   try {
     const res = await API.get(`/blog/read-blogs?SKIP=${page}`, {
-      headers:null,
-      params:null,
+      headers: null,
+      params: null,
     });
     return res.data.status === 200 ? res.data.data : "";
   } catch (error) {
@@ -12,20 +12,21 @@ const readBlogs = async (page: any) => {
   }
 };
 
-const createBlog = async (blogTitle: any, blogInput: any,) => {
+const createBlog = async (blogTitle: any, blogInput: any) => {
   if (!blogInput) {
-    alert("please enter text");
+    alert("please enter a blog post");
     return;
   }
-
+  if (!blogTitle) {
+    alert("please enter a blog Title");
+    return;
+  }
   try {
-    const res = await API.post(`/blog/create-blog`,
-       {
+    const res = await API.post(`/blog/create-blog`, {
       title: blogTitle,
       textbody: blogInput,
-  
     });
-    console.log(res)
+    return res;
   } catch (error) {
     console.log(error);
   }

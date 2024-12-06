@@ -9,10 +9,8 @@ export const MyBlogs = () => {
   const deletemutation = MyBlogsQuery.useMutationDeleteMyBlog(pageNumber);
   const updateMutation = myBlogsQuery.useMutationUpdateMyBlog(
     newtext,
-    pageNumber
   );
 
-  console.log(data,isPending);
   return (
     <div className="h-[90h] overflow-scroll w-[87vw]">
       {isPending ? (

@@ -3,14 +3,13 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
-// fileExports
+
 const { registerUser, findUserWithKey } = require("../models/userModel");
 const { userValidation, userDataValiDation } = require("../utils/authUtils");
 
 const registerController = async (req, res) => {
   const { name, username, email, password } = req.body;
   try {
-    //datavalidation
     await userValidation({ username, email, password });
   } catch (error) {
     return res.send({
@@ -19,7 +18,6 @@ const registerController = async (req, res) => {
     });
   }
   try {
-    // registeruser
     await registerUser({ name, username, email, password });
     return res.send({
       status: 201,
@@ -46,9 +44,8 @@ const loginControler = async (req, res) => {
     });
   }
   try {
-    //find user in Db
     const userDb = await findUserWithKey({ key: loginId });
-    //compare password
+
     const ismatch = await bcrypt.compare(password, userDb.password);
 
     if (!ismatch) {
@@ -58,7 +55,6 @@ const loginControler = async (req, res) => {
       });
     }
 
-    // genrate tokens
     const token = jwt.sign(_id, "mysecret");
     res.send({
       status: 200,
@@ -76,9 +72,7 @@ const loginControler = async (req, res) => {
 };
 
 // todo:work in progress
-//logout
 const logoutController = async (req, res) => {
-  console.log(req.session);
   req.session.destroy((err) => {
     if (err) {
       return res.send({
@@ -96,14 +90,6 @@ const logoutController = async (req, res) => {
 
 // todo:work in progress
 const logOutAllController = async (req, res) => {
-  const userId = req.session.User.userId;
-
-  //create a session schema
-  const sessionSchema = new Schema({ _id: String }, { strict: false });
-  // conver it into a model
-  const sessionModel = mongoose.model("session", sessionSchema);
-
-  // perform mongoose query to delete the entry
   try {
     const deleteDb = await sessionModel.deleteMany({
       "session.User.userId": userId,
@@ -123,7 +109,6 @@ const logOutAllController = async (req, res) => {
 };
 module.exports = {
   registerController,
-
   loginControler,
   logoutController,
   logOutAllController,

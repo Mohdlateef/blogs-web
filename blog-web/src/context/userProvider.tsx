@@ -1,10 +1,14 @@
+import { useState } from "react";
 import userContext from "./userIdContext";
 
 const UserProvider = (props: any) => {
   const storedUserData = JSON.parse(localStorage.getItem("isLogin"));
-  const userId = storedUserData.userId;
+  let userId=storedUserData?storedUserData:""
+const [isVisible,setIsVisible]=useState<any>(false)
+const [message,setMessage]=useState<any>("")
+
   return (
-    <userContext.Provider value={{ userId }}>
+    <userContext.Provider value={{ message, userId,isVisible,setIsVisible,setMessage}}>
       {props.children}
     </userContext.Provider>
   );

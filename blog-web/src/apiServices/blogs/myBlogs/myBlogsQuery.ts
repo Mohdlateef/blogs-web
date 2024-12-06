@@ -25,12 +25,13 @@ const useMutationDeleteMyBlog = (pageNumber: Number) => {
   return useMutation({
     mutationFn: (id: string) => MyBlogsAPI.deleteMyBlog(id),
     onSuccess: (data: any, id: string) => {
-      queryClient.setQueryData(["myBlogs", pageNumber], (oldMyBlogs: any) => {
-        const newMyBlogs: any = oldMyBlogs?.filter(
-          (blog: any) => blog._id !== id
-        );
-        return newMyBlogs;
-      });
+      queryClient.invalidateQueries("myBlogs")
+      // queryClient.setQueryData(["myBlogs", pageNumber], (oldMyBlogs: any) => {
+      //   const newMyBlogs: any = oldMyBlogs?.filter(
+      //     (blog: any) => blog._id !== id
+      //   );
+      //   return newMyBlogs;
+      // });
     },
   });
 };

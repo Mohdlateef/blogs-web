@@ -15,7 +15,6 @@ const createBlogControler = async (req, res) => {
   const { title, textbody } = req.body;
   const userId = req.headers["_id"];
   try {
-    //dataValidation
     await blogDataValidation(title, textbody);
   } catch (error) {
     return res.send({
@@ -23,7 +22,7 @@ const createBlogControler = async (req, res) => {
       error: error,
     });
   }
-  // store blogs
+
   try {
     const blogdb = await createBlogModel({ title, textbody, userId });
     return res.send({
@@ -40,7 +39,6 @@ const createBlogControler = async (req, res) => {
   }
 };
 
-// readblog
 const readBlogsController = async (req, res) => {
   const SKIP = parseInt(req.query.SKIP) || 0;
   try {
@@ -63,8 +61,6 @@ const readBlogsController = async (req, res) => {
     });
   }
 };
-
-// readmyblogs
 
 const readMyBlogsController = async (req, res) => {
   const SKIP = parseInt(req.query.SKIP) || 0;
@@ -90,11 +86,8 @@ const readMyBlogsController = async (req, res) => {
   }
 };
 
-//Edit blogs
 const editBlogsController = async (req, res) => {
   const { newText, blogId } = req.body;
-
-  //dataValidation
   try {
     await blogDataValidation(newText);
   } catch (error) {
@@ -103,26 +96,21 @@ const editBlogsController = async (req, res) => {
       error: error,
     });
   }
-  // findblogbyId
+
   try {
     const blogdata = await getBlogWithId({ blogId });
-
-    // checkblog
     if (!blogdata) {
       return res.send({
         status: 204,
         message: `no content find regarding ${blogId}`,
       });
     }
-
-    //store new data
     await editBlog({ newText, blogId });
     return res.send({
       status: 201,
       message: "new data edited sucessfully",
     });
   } catch (error) {
-    console.log(error);
     return res.send({
       status: 500,
       message: "internal server error",
@@ -131,20 +119,16 @@ const editBlogsController = async (req, res) => {
   }
 };
 
-//Delteblogs
 const deleteBlogController = async (req, res) => {
   const { blogId } = req.body;
   try {
     const blogdata = await getBlogWithId({ blogId });
-
-    // checkblog
     if (!blogdata) {
       return res.send({
         status: 204,
         message: `no blog found with this ${blogId}`,
       });
     }
-
     const deletedb = await deleteBlog({ blogId });
     return res.send({
       status: 200,
