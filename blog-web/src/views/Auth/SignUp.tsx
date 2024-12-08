@@ -2,7 +2,8 @@ import React from "react";
 
 import { signUp } from "../../apiServices/auth/authApi";
 import { useMutation } from "@tanstack/react-query";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { data, Navigate, NavLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const SingUp = () => {
   const [name, setName] = React.useState<any>("");
@@ -13,11 +14,16 @@ export const SingUp = () => {
 
   const handleSubmit = () => {
     if (!name || !userName || !email || !password) {
-      alert("empty fields please fill all fields");
+      toast("empty fields ", {
+        duration: 2000,
+      });
       return;
     }
     if (password.length < 6) {
-      alert("Password should be aleast 7 characters long");
+      toast("Password should be aleast 7 characters long", {
+        duration: 2000,
+      });
+
       return;
     }
     mutate({ name, userName, email, password });
@@ -25,14 +31,13 @@ export const SingUp = () => {
 
   const { mutate } = useMutation({
     mutationFn: signUp, // Call the signUp function (which wraps the axios call)
-    onSuccess: (apiData:any) => {
-      console.log(apiData.status);
+    onSuccess: (apiData: any) => {
       if (apiData.status === 201) {
-        alert(apiData.message);
+        toast.success(apiData.message);
         navigate("/signIn");
       } else alert(apiData.error);
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       console.error("Sign-up failed:", error);
     },
   });

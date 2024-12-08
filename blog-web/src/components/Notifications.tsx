@@ -10,9 +10,12 @@ export default function Notifications() {
   }
 
   return isVisible ? (
-    <div className="fixed top-1 left-1/2 bg-orange-300 p-3 rounded px-9">
-      {message}
-    </div>
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-yellow-100 text-black px-6 py-4 rounded-lg shadow-lg flex items-center space-x-4">
+  
+     
+    <span className="text-sm font-medium">{message}</span>
+    
+  </div>
   ) : (
     ""
   );

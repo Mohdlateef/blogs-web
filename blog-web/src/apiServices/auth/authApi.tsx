@@ -1,12 +1,11 @@
-const baseURL = "http://localhost:8000";
-import axios from "axios";
-
 import { User } from "./types/authInterfaces";
 import { API } from "..";
+import toast from "react-hot-toast";
+
 export const signUp = async ({ name, userName, email, password }: User) => {
   try {
-    const res = await axios.post(
-      `${baseURL}/auth/sign-up`,
+    const res = await API.post(
+      `/auth/sign-up`,
       {
         name: name,
         username: userName,
@@ -18,10 +17,9 @@ export const signUp = async ({ name, userName, email, password }: User) => {
         headers: null,
       }
     );
-
-    return res.data;
+    return res;
   } catch (error) {
-    console.log(error);
+    toast.error(error.message);
   }
 };
 
@@ -41,7 +39,6 @@ export const signIn = async ({ loginId, password }: User) => {
     );
 
     if (res.data.status === 200) {
-      
       localStorage.setItem(
         "isLogin",
         JSON.stringify({
@@ -55,12 +52,12 @@ export const signIn = async ({ loginId, password }: User) => {
 
     return res.data;
   } catch (error) {
-    console.log(error);
+    // return error
   }
 };
 
 export const logout = async () => {
-  const res = await axios.post(`${baseURL}/auth/logout`, {
+  const res = await API.post(`/auth/logout`, {
     withCredentials: true,
   });
   console.log(res);
