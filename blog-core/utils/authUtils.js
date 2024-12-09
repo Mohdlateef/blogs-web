@@ -14,4 +14,9 @@ const userValidation = ({ username, email, password }) => {
   });
 };
 
-module.exports={userValidation};
+const userDataValiDation=({loginId,password})=>
+{
+  if(!loginId||!password)
+    reject("missing cradential");
+}
+module.exports={userValidation,userDataValiDation};

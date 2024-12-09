@@ -1,73 +1,63 @@
-const baseURL = "http://localhost:8000";
-import axios from "axios";
-
 import { User } from "./types/authInterfaces";
+import { API } from "..";
+import toast from "react-hot-toast";
+
 export const signUp = async ({ name, userName, email, password }: User) => {
   try {
-    const res = await axios.post(`${baseURL}/auth/register`, {
-      name: name,
-      username: userName,
-      email: email,
-      password: password,
-    });
-
-    return res.data;
+    const res = await API.post(
+      `/auth/sign-up`,
+      {
+        name: name,
+        username: userName,
+        email: email,
+        password: password,
+      },
+      {
+        params: null,
+        headers: null,
+      }
+    );
+    return res;
   } catch (error) {
-    console.log(error);
+    toast.error(error.message);
   }
 };
 
-
-
-
-
-
 export const signIn = async ({ loginId, password }: User) => {
   try {
-axios.defaults.withCredentails=true;
-
-    const res = await axios.post(
-      `${baseURL}/auth/logIn`,
+    const res = await API.post(
+      `/auth/sign-in`,
       {
         loginId,
         password,
       },
       {
-        withCredentials: true,
+        params: {
+          userId: null,
+        },
       }
     );
 
-
-
-
-    console.log(res.data,39)
-
-
-
-    if(res.data.status===200)
-    {
-    console.log(res.data.data.userDb.username,39) 
-
-    
-    //store token in local
-    localStorage.setItem("isLogin",JSON.stringify({
-      islogin:true,
-      token:res.data.token,
-     username:res.data.data.userDb.username,
-     userId:res.data.data.userDb._id
-    }))
-
-
+    if (res.data.status === 200) {
+      localStorage.setItem(
+        "isLogin",
+        JSON.stringify({
+          islogin: true,
+          token: res.data.token,
+          username: res.data.data.userDb.username,
+          userId: res.data.data.userDb._id,
+        })
+      );
     }
 
     return res.data;
   } catch (error) {
-    console.log(error);
+    // return error
   }
 };
 
 export const logout = async () => {
-  const res = await axios.post(`${baseURL}/auth/logout`, {
+  const res = await API.post(`/auth/logout`, {
     withCredentials: true,
   });
   console.log(res);
