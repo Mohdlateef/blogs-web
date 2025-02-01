@@ -56,6 +56,7 @@ const loginControler = async (req, res) => {
     }
 
     const token = jwt.sign(_id, "mysecret");
+    console.log(token,59)
     res.send({
       status: 200,
       message: "login sucessfully",

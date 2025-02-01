@@ -11,7 +11,7 @@ type Data = {
   isPending: boolean;
 };
 
-const useQueryGetMyBlogs = (pageNumber: Number) => {
+const useQueryGetMyBlogs = (pageNumber: number) => {
   return useQuery({
     queryKey: ["myBlogs", pageNumber],
     queryFn: () => MyBlogsAPI.myblogs(pageNumber),
@@ -19,7 +19,7 @@ const useQueryGetMyBlogs = (pageNumber: Number) => {
   });
 };
 
-const useMutationDeleteMyBlog = (pageNumber: Number) => {
+const useMutationDeleteMyBlog = (pageNumber: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -39,7 +39,7 @@ const useMutationDeleteMyBlog = (pageNumber: Number) => {
 const useMutationUpdateMyBlog = (text: string) => {
   return useMutation({
     mutationFn: (id: string) => MyBlogsAPI.updateBlog(text, id),
-    onsuccess: (data: any, id: string) => {},
+    onsuccess: (data: any, id: string) => { },
   });
 };
 

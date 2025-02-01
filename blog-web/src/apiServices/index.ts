@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const storedUserData = JSON.parse(localStorage.getItem("isLogin"));
-let _id = storedUserData ? storedUserData.userId : "";
-let token = storedUserData ? storedUserData.token : "";
-
+const _id = storedUserData ? storedUserData.userId : "";
+const token = storedUserData ? storedUserData.token : "";
+console.log(`${import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL}`)
 const axiosClient = axios.create({
-  baseURL: `http://localhost:8000/`,
+  baseURL: `${import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL}`,
   params: {
     userId: _id,
   },
