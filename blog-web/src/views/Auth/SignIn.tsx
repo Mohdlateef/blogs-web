@@ -5,11 +5,12 @@ import { useMutation } from "@tanstack/react-query";
 import { NavLink, useNavigate } from "react-router-dom";
 import Notifications from "../../components/Notifications";
 import userContext from "../../context/userIdContext";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const { setIsVisible, setMessage }: any = useContext(userContext);
-  const [loginId, setLoginId] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [loginId, setLoginId] = React.useState<string>();
+  const [password, setPassword] = React.useState<string>();
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -24,19 +25,17 @@ const SignIn = () => {
   const { mutate } = useMutation({
     mutationFn: signIn,
     onSuccess: (apiData: any) => {
-      console.log(apiData)
       if (apiData.status === 200) {
         setMessage(apiData.message);
-       
         navigate("/");
         return;
-      } 
-    setMessage(apiData.message)
-    setIsVisible(true)
+      }
+      setMessage(apiData.message)
+      setIsVisible(true)
 
     },
     onError: (error: any) => {
-   console.log(error)
+      toast.error(error)
     },
   });
 

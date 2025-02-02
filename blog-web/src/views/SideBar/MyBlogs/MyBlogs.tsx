@@ -5,8 +5,8 @@ import Button from "../../../components/Button";
 export const MyBlogs = () => {
   const [pageNumber, setpage] = useState<number>(0);
   const [newtext, setnewText] = useState("");
-  const { data, isPending }:any = MyBlogsQuery.useQueryGetMyBlogs(pageNumber);
-  const deletemutation = MyBlogsQuery.useMutationDeleteMyBlog(pageNumber);
+  const { data, isPending }: any = MyBlogsQuery.useQueryGetMyBlogs(pageNumber);
+  const deletemutation = MyBlogsQuery.useMutationDeleteMyBlog();
   const updateMutation = myBlogsQuery.useMutationUpdateMyBlog(
     newtext,
   );
@@ -16,7 +16,7 @@ export const MyBlogs = () => {
       {isPending ? (
         <h3>loading....</h3>
       ) : (
-        data?(data.map((ele: any) => (
+        data ? (data.map((ele: any) => (
           <div
             key={ele._id}
             className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg  my-4 w-70vw"
@@ -28,7 +28,7 @@ export const MyBlogs = () => {
               <p
                 className="text-gray-600 text-base"
                 id={`${ele._id}`}
-                onInput={(e) => {
+                onInput={(e: any) => {
                   setnewText(e.target.textContent);
                 }}
               >
@@ -73,7 +73,7 @@ export const MyBlogs = () => {
               </Button>
             </div>
           </div>
-        ))):<h3>no more content</h3>
+        ))) : <h3>no more content</h3>
       )}
       <div className="flex items-center gap-1">
         <button

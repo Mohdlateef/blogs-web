@@ -6,10 +6,10 @@ import { data, Navigate, NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export const SingUp = () => {
-  const [name, setName] = React.useState<any>("");
-  const [userName, setUserName] = React.useState<any>("");
-  const [email, setEmail] = React.useState<any>("");
-  const [password, setPassword] = React.useState<any>("");
+  const [name, setName] = React.useState<string>("");
+  const [userName, setUserName] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -68,7 +68,7 @@ export const SingUp = () => {
 
         <div>
           <label
-            For="username"
+            // For="username"
             className="block text-sm font-medium text-gray-700"
           >
             Username

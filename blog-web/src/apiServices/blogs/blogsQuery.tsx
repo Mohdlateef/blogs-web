@@ -20,7 +20,7 @@ const useMutationCreateBlog = (blogTitle: string, blogInput: string) => {
   return useMutation({
     mutationFn: () => BlogsAPI.createBlog(blogTitle, blogInput),
     onSuccess: () => {
-      queryClient.invalidateQueries("blogs");
+      // queryClient.invalidateQueries("blogs");
     },
   });
 };

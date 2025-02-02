@@ -56,8 +56,9 @@ export const signIn = async ({ loginId, password }: User) => {
     }
 
     return res.data;
-  } catch (error: Error) {
-    return error
+  } catch (error) {
+    toast.error(error)
+    return
   }
 };
 

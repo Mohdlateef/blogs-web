@@ -25,7 +25,7 @@ const useMutationDeleteMyBlog = () => {
   return useMutation({
     mutationFn: (id: string) => MyBlogsAPI.deleteMyBlog(id),
     onSuccess: (data: any, id: string) => {
-      queryClient.invalidateQueries("myBlogs")
+      // queryClient.invalidateQueries("myBlogs")
       // queryClient.setQueryData(["myBlogs", pageNumber], (oldMyBlogs: any) => {
       //   const newMyBlogs: any = oldMyBlogs?.filter(
       //     (blog: any) => blog._id !== id
@@ -39,7 +39,6 @@ const useMutationDeleteMyBlog = () => {
 const useMutationUpdateMyBlog = (text: string) => {
   return useMutation({
     mutationFn: (id: string) => MyBlogsAPI.updateBlog(text, id),
-    onsuccess: (data: any, id: string) => { },
   });
 };
 
