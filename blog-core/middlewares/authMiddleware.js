@@ -1,20 +1,18 @@
-const jwt=require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
-const auth=(req,res,next)=>{
-   
-    const token=req.headers['auth'];
-    const email=req.headers['email']
-    const isAuthEmail=jwt.verify(token,"mysecret")
-  console.log(email,)
-    if(isAuthEmail===email)
-       {next();
-             
-       }
-    
-   else{ return  res.send({
-        status:400,
-        message:"unAuthorised access"
-    })}
-}
+const auth = (req, res, next) => {
+  const token = req.headers["token"];
+  const _id = req.headers["_id"];
+  console.log(_id)
+  console.log(token, 6);
+  // const isAuth = jwt.verify(token, "mysecret");
+  if (token) next();
+  else {
+    return res.send({
+      status: 400,
+      message: "unAuthorised access",
+    });
+  }
+};
 
-module.exports=auth;
+module.exports = auth;

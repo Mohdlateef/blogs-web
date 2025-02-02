@@ -9,23 +9,22 @@ const {
 } = require("../models/blogModel");
 const { LIMIT } = require("../privateContants");
 
-const blogdatavalidation = require("../utils/blogutils");
+const blogDataValidation = require("../utils/blogutils");
 
 const createBlogControler = async (req, res) => {
-  const { title, textbody, userId } = req.body;
-
+  const { title, textbody } = req.body;
+  const userId = req.headers["_id"];
   try {
-    await blogdatavalidation(title, textbody);
+    await blogDataValidation(title, textbody);
   } catch (error) {
     return res.send({
       status: 400,
       error: error,
     });
   }
-  // store blogs
+
   try {
     const blogdb = await createBlogModel({ title, textbody, userId });
-
     return res.send({
       status: 201,
       message: "blog created sucessfully ",
@@ -40,11 +39,8 @@ const createBlogControler = async (req, res) => {
   }
 };
 
-// readblog
-
 const readBlogsController = async (req, res) => {
   const SKIP = parseInt(req.query.SKIP) || 0;
-
   try {
     const blogs = await readBlogsModel({ SKIP });
     if (blogs.length == 0) {
@@ -65,8 +61,6 @@ const readBlogsController = async (req, res) => {
     });
   }
 };
-
-// readmyblogs
 
 const readMyBlogsController = async (req, res) => {
   const SKIP = parseInt(req.query.SKIP) || 0;
@@ -92,39 +86,31 @@ const readMyBlogsController = async (req, res) => {
   }
 };
 
-//Edit blogs
 const editBlogsController = async (req, res) => {
   const { newText, blogId } = req.body;
-
-  //dataValidation
   try {
-    await blogdatavalidation(newText);
+    await blogDataValidation(newText);
   } catch (error) {
     return res.send({
       status: 400,
       error: error,
     });
   }
-  // findblogbyId
+
   try {
     const blogdata = await getBlogWithId({ blogId });
-
-    // checkblog
     if (!blogdata) {
       return res.send({
         status: 204,
         message: `no content find regarding ${blogId}`,
       });
     }
-
-    //store new data
     await editBlog({ newText, blogId });
     return res.send({
       status: 201,
       message: "new data edited sucessfully",
     });
   } catch (error) {
-    console.log(error);
     return res.send({
       status: 500,
       message: "internal server error",
@@ -133,21 +119,16 @@ const editBlogsController = async (req, res) => {
   }
 };
 
-//Delteblogs
 const deleteBlogController = async (req, res) => {
   const { blogId } = req.body;
-  console.log(blogId);
   try {
     const blogdata = await getBlogWithId({ blogId });
-
-    // checkblog
     if (!blogdata) {
       return res.send({
         status: 204,
         message: `no blog found with this ${blogId}`,
       });
     }
-
     const deletedb = await deleteBlog({ blogId });
     return res.send({
       status: 200,
