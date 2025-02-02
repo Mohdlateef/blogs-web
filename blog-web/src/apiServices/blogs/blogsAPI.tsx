@@ -1,6 +1,6 @@
 import { API } from "..";
 
-const readBlogs = async (page: any) => {
+const readBlogs = async (page: number) => {
   try {
     const res = await API.get(`/blog/read-blogs?SKIP=${page}`, {
       headers: null,
@@ -12,7 +12,7 @@ const readBlogs = async (page: any) => {
   }
 };
 
-const createBlog = async (blogTitle: any, blogInput: any) => {
+const createBlog = async (blogTitle: string, blogInput: string) => {
   if (!blogInput) {
     alert("please enter a blog post");
     return;

@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { BlogsAPI } from "..";
 
-const useQueryreadBlogs = (pageNumber: Number) => {
+const useQueryreadBlogs = (pageNumber: number) => {
   return useQuery({
     queryKey: ["blogs", pageNumber],
     queryFn: () => BlogsAPI.readBlogs(pageNumber),
@@ -14,12 +14,12 @@ const useQueryreadBlogs = (pageNumber: Number) => {
   });
 };
 
-const useMutationCreateBlog = (blogTitle: String, blogInput: string) => {
+const useMutationCreateBlog = (blogTitle: string, blogInput: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: () => BlogsAPI.createBlog(blogTitle, blogInput),
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       queryClient.invalidateQueries("blogs");
     },
   });

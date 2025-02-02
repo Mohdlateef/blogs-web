@@ -19,7 +19,7 @@ const useQueryGetMyBlogs = (pageNumber: number) => {
   });
 };
 
-const useMutationDeleteMyBlog = (pageNumber: number) => {
+const useMutationDeleteMyBlog = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

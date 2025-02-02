@@ -1,6 +1,6 @@
 import { API } from "../..";
 
-const myblogs = async (page: Number) => {
+const myblogs = async (page: number) => {
   const res = await API.get(`/blog/read-my-blogs?SKIP=${page}`);
   return res.data.status === 200 ? res.data.data : "";
 };

@@ -3,6 +3,11 @@ import { API } from "..";
 import toast from "react-hot-toast";
 
 export const signUp = async ({ name, userName, email, password }: User) => {
+  type Error = {
+    status: string,
+    message: string,
+  }
+
   try {
     const res = await API.post(
       `/auth/sign-up`,
@@ -51,8 +56,8 @@ export const signIn = async ({ loginId, password }: User) => {
     }
 
     return res.data;
-  } catch (error) {
-    // return error
+  } catch (error: Error) {
+    return error
   }
 };
 

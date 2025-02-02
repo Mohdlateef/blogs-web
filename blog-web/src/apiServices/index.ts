@@ -1,9 +1,10 @@
 import axios from "axios";
+const storedUserDataString = localStorage.getItem("isLogin") ?? "null"; // fallback to "null" if it's null
+const storedUserData = storedUserDataString !== "null" ? JSON.parse(storedUserDataString) : null;
 
-const storedUserData = JSON.parse(localStorage.getItem("isLogin"));
+
 const _id = storedUserData ? storedUserData.userId : "";
 const token = storedUserData ? storedUserData.token : "";
-console.log(`${import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL}`)
 const axiosClient = axios.create({
   baseURL: `${import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL}`,
   params: {
