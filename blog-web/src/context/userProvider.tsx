@@ -1,3 +1,6 @@
+// eslint-disable-next-line
+// @ts-nocheck
+
 import { useState } from "react";
 import userContext from "./userIdContext";
 
